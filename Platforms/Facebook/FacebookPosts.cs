@@ -19,7 +19,7 @@ namespace FetchSocialMediaPosts.Platforms.Facebook
         {
             _maxPosts = maxPosts;
             _httpClient = httpClientFactory.CreateClient();
-            _accessToken = "EAAQZAmHMQII0BO3Ng1OFZBfhB3UtyXFUAYuPoUaeUO1TeVceiHAnGvQch3wVG8JY52MHxDRAjv9Vy3e7Q1HxB5Cde1woLZAZCc9jzmO1JEkst0QsE4w5YPx83uV4USdRrSlzFFlH9ZCfTZAoZBdZC0ZCPSGn9CTZB1zvlBOSq6lqWqXFrcg7b6NamLcTOuCOFJRkFZA4zLAPqr8hmUmbpDL6PkkWROKH8dGW2E0VMJnTsTLBKH44DDb3gUCEJx9N2cuRqebqlfhdwZDZD";
+            _accessToken = "Token";
             _baseUrl = $"https://graph.facebook.com/v21.0/me/posts?fields=id,from,created_time,message,permalink_url&access_token={_accessToken}";
         }
 
