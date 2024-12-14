@@ -52,7 +52,7 @@ namespace FetchSocialMediaPosts.Service
             {
                 Console.WriteLine("Running all services sequentially on a single thread");
 
-                await RunServicesSequentially(_socialMediaServices);
+                await RunServicesSequentially(_socialMediaServices, _cancellationTokenSource.Token);
             }
             else
             {
@@ -71,20 +71,20 @@ namespace FetchSocialMediaPosts.Service
             PostsUpdated?.Invoke(this, _fetchedPosts.ToList());
         }
 
-        private async Task RunServicesSequentially(List<ISocialMediaService> services)
+        private async Task RunServicesSequentially(List<ISocialMediaService> services, CancellationToken token)
         {
             foreach (var service in services)
             {
                 try
                 {
-                    if (_cancellationTokenSource.Token.IsCancellationRequested)
+                    if (token.IsCancellationRequested)
                     {
                         Console.WriteLine("Fetch operation cancelled");
                         return;
                     }
 
                     Console.WriteLine("===================================================================================================\n");
-                    Console.WriteLine($"{service.SocialMediaName} fetcher is running\n");
+                    Console.WriteLine($"{service.SocialMediaName} fetcher is running thread ID : {Thread.CurrentThread.ManagedThreadId}\n");
                     Console.WriteLine("===================================================================================================\n");
 
                     var posts = await service.GetPostsAsync();

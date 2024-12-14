@@ -24,7 +24,7 @@ namespace FetchSocialMediaPosts.Platforms.Instagram
         {
             _maxPosts = maxPosts;
             _httpClient = httpClientFactory.CreateClient();
-            _accessToken = "Token";
+            _accessToken = "IGQWROcnpCa1dlX1NpZAHNlelhsOHk1R0k1OXBnUi00dVNnN2NmZAUUzMFo5d3JMeHg0UHNWZAThrT3h5bGp6ekZA1X19yd1Q2MU53UDRnWmRZAUnFIblV3TmZAOZAVFQaWR2LVJ0ZA3AwN0tkTjRkQVBwUFBvbWEwUE44cjgZD\r\n";
             _baseUrl = $"https://graph.instagram.com/9077243345697411/media?fields=id,media_url,permalink,username,timestamp,caption&access_token={_accessToken}";
         }
 
@@ -35,7 +35,7 @@ namespace FetchSocialMediaPosts.Platforms.Instagram
             try
             {
                 Console.WriteLine("===================================================================================================\n\n");
-                Console.WriteLine($"Fetching posts from Instagram\n\n");
+                Console.WriteLine($"Fetching posts from Instagram thread ID : {Thread.CurrentThread.ManagedThreadId}\n\n");
                 Console.WriteLine("===================================================================================================\n\n");
 
 

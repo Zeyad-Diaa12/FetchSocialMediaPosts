@@ -31,12 +31,12 @@ namespace FetchSocialMediaPosts.Platforms.Twitter
         public async Task<List<PostDto>> GetPostsAsync()
         {
             var postsResponse = new List<PostDto>();
-            var _bearerToken = "Token";
+            var _bearerToken = "AAAAAAAAAAAAAAAAAAAAAM4gxgEAAAAA%2FY4A6ARKFSYS5IqSQ4mK8vMvP0A%3DiarliueLSCkf7DbYHfENWuVEHnnpMK1PAlLuDwh76tiA1mALGK";
 
             try
             {
                 Console.WriteLine("===================================================================================================\n\n");
-                Console.WriteLine($"Fetching posts from Twitter\n\n");
+                Console.WriteLine($"Fetching posts from Twitter thread ID : {Thread.CurrentThread.ManagedThreadId}\n\n");
                 Console.WriteLine("===================================================================================================\n\n");
 
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _bearerToken);
