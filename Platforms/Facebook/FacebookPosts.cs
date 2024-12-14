@@ -30,7 +30,7 @@ namespace FetchSocialMediaPosts.Platforms.Facebook
             try
             {
                 Console.WriteLine("===================================================================================================\n\n");
-                Console.WriteLine($"Fetching posts from Facebook on thread ID: {Thread.CurrentThread.ManagedThreadId}\n\n");
+                Console.WriteLine($"Fetching posts from Facebook\n\n");
                 Console.WriteLine("===================================================================================================\n\n");
 
                 var response = await _httpClient.GetAsync(_baseUrl);
@@ -77,6 +77,10 @@ namespace FetchSocialMediaPosts.Platforms.Facebook
 
                     postsResponse.Add(post);
                 }
+
+                Console.WriteLine("===================================================================================================\n\n");
+                Console.WriteLine($"Completed fetching posts from Facebook\n\n");
+                Console.WriteLine("===================================================================================================\n\n");
 
                 return postsResponse;
             }

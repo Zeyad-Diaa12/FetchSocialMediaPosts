@@ -35,7 +35,7 @@ namespace FetchSocialMediaPosts.Platforms.Instagram
             try
             {
                 Console.WriteLine("===================================================================================================\n\n");
-                Console.WriteLine($"Fetching posts from Instagram on thread ID: {Thread.CurrentThread.ManagedThreadId}\n\n");
+                Console.WriteLine($"Fetching posts from Instagram\n\n");
                 Console.WriteLine("===================================================================================================\n\n");
 
 
@@ -83,6 +83,10 @@ namespace FetchSocialMediaPosts.Platforms.Instagram
 
                     postsResponse.Add(post);
                 }
+
+                Console.WriteLine("===================================================================================================\n\n");
+                Console.WriteLine($"Completed fetching posts from Instagram\n\n");
+                Console.WriteLine("===================================================================================================\n\n");
 
                 return postsResponse;
             }

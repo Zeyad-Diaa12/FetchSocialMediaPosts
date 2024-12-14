@@ -48,28 +48,60 @@ namespace FetchSocialMediaPosts.Service
 
         private async Task FetchPostsAsync(int numberOfThreads)
         {
-            if (_cancellationTokenSource?.IsCancellationRequested ?? true)
+            if (numberOfThreads == 1)
             {
-                Console.WriteLine("Operation cancelled or token source disposed.");
-                return;
+                Console.WriteLine("Running all services sequentially on a single thread");
+
+                await RunServicesSequentially(_socialMediaServices);
             }
-
-            var options = new ParallelOptions
+            else
             {
-                MaxDegreeOfParallelism = numberOfThreads,
-                CancellationToken = _cancellationTokenSource.Token
-            };
+                var options = new ParallelOptions
+                {
+                    MaxDegreeOfParallelism = numberOfThreads,
+                    CancellationToken = _cancellationTokenSource.Token
+                };
 
-            await Parallel.ForEachAsync(_socialMediaServices, options, async (service, token) =>
-            {
-                await RunServiceAsync(service, token);
-            });
+                await Parallel.ForEachAsync(_socialMediaServices, options, async (service, token) =>
+                {
+                    await RunServices(service, token);
+                });
+            }
 
             PostsUpdated?.Invoke(this, _fetchedPosts.ToList());
         }
 
+        private async Task RunServicesSequentially(List<ISocialMediaService> services)
+        {
+            foreach (var service in services)
+            {
+                try
+                {
+                    if (_cancellationTokenSource.Token.IsCancellationRequested)
+                    {
+                        Console.WriteLine("Fetch operation cancelled");
+                        return;
+                    }
 
-        private async Task RunServiceAsync(ISocialMediaService service, CancellationToken token)
+                    Console.WriteLine("===================================================================================================\n");
+                    Console.WriteLine($"{service.SocialMediaName} fetcher is running\n");
+                    Console.WriteLine("===================================================================================================\n");
+
+                    var posts = await service.GetPostsAsync();
+
+                    foreach (var post in posts)
+                    {
+                        _fetchedPosts.Add(post);
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error fetching posts from {service.SocialMediaName}: {ex.Message}");
+                }
+            }
+        }
+
+        private async Task RunServices(ISocialMediaService service, CancellationToken token)
         {
             try
             {
@@ -80,7 +112,7 @@ namespace FetchSocialMediaPosts.Service
                 }
 
                 Console.WriteLine("===================================================================================================\n");
-                Console.WriteLine($"{service.SocialMediaName} is running on thread ID: {Thread.CurrentThread.ManagedThreadId}\n");
+                Console.WriteLine($"{service.SocialMediaName} fetcher is running\n");
                 Console.WriteLine("===================================================================================================\n");
 
                 var posts = await service.GetPostsAsync();

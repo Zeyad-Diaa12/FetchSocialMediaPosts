@@ -36,7 +36,7 @@ namespace FetchSocialMediaPosts.Platforms.Twitter
             try
             {
                 Console.WriteLine("===================================================================================================\n\n");
-                Console.WriteLine($"Fetching posts from Twitter on thread ID: {Thread.CurrentThread.ManagedThreadId}\n\n");
+                Console.WriteLine($"Fetching posts from Twitter\n\n");
                 Console.WriteLine("===================================================================================================\n\n");
 
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", _bearerToken);
@@ -85,6 +85,10 @@ namespace FetchSocialMediaPosts.Platforms.Twitter
 
                     postsResponse.Add(post);
                 }
+
+                Console.WriteLine("===================================================================================================\n\n");
+                Console.WriteLine($"Completed fetching posts from Twitter\n\n");
+                Console.WriteLine("===================================================================================================\n\n");
 
                 return postsResponse;
             }
